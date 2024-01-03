@@ -1,0 +1,215 @@
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url("../images/login-bkg.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.wrapper {
+    width: 400px;
+    position: relative;
+    display: flex;
+    background: rgb(8 10 18 / 75%);
+    border: 2px solid rgba(255,255,255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+    color: white;
+    border-radius: 30px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.wrapper .form-box {
+    width: 100%;
+    padding: 40px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.wrapper .form-box.login {
+    transition: transform .18s ease;
+    transform: translateX(0);
+}
+
+.wrapper.active .form-box.login {
+    transition: none;
+    transform: translateX(-400px);
+}
+
+.wrapper .form-box.register {
+    position: absolute;
+    transition: none;
+    transform: translateX(400px);
+}
+
+.wrapper.active .form-box.register {
+    transition: transform .18s ease;
+    transform: translateX(0);
+}
+
+.wrapper h1 {
+    font-size: 40px;
+    font-family: 'Lobster', sans-serif;
+    text-align: center;
+}
+
+.wrapper h2 {
+    text-align: center;
+    margin: 30px;
+}
+
+.multicolor-text {
+    background-image: linear-gradient(to right, #1a4e52, #0f234b, #040d25);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.wrapper .input-box {
+    position: relative;
+    max-width: 260px;
+    height: 100%;
+    margin: 30px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    outline: none;
+    border: 2px solid rgba(255,255,255, .2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: white;
+    padding: 20px 45px 20px 20px;
+}
+
+.input-box input:hover,
+.input-box input:focus {
+    /*border-color: #040d25;*/
+    border-width: 3px;
+}
+
+
+.input-box input::placeholder {
+    color: white;
+}
+
+.input-box i {
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    transform: translateY(-50%);
+}
+
+.input-box .error-section {
+    margin: 20px 0 0 0;
+    padding: 5px 20px;
+    width: 100%;
+    color: red;
+    font-size: 14px;
+    border-radius: 20px;
+    border: 2px solid rgb(248 2 2);
+}
+
+.d-none {
+    display: none;
+}
+
+.wrapper .btn {
+    width: 100%;
+    height: 45px;
+    /*background: #030f22;*/
+    background: linear-gradient(to right, #1a4e52, #132642, #040d25);
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0, .1);
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+}
+
+button {
+    -webkit-appearance: none;
+    background: linear-gradient(to right, #1a4e52 0%, #7c1a72 50%, #040d25 100%);
+    background-size: 500%;
+    border: none;
+    border-radius: 5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 45px;
+    letter-spacing: 0.05em;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 100%;
+}
+
+button:hover {
+    animation-name: gradient;
+    -webkit-animation-name: gradient;
+    animation-duration: 2s;
+    /*-webkit-animation-duration: s;*/
+    animation-iteration-count: 1;
+    -webkit-animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100%;
+    }
+}
+
+.wrapper .login-register {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-register p a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-register p a:hover {
+    text-decoration: underline;
+}
+
+.input-box input.invalid-input {
+    border-color: red;
+}
+
+@media (max-width: 400px) {
+    .wrapper {
+        width: 100%;
+        height: 100vh;
+        border: none;
+        border-radius: 0;
+    }
+}
