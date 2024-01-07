@@ -199,7 +199,10 @@
             let btn = createMessageBtn(imgIndex);
 
             // Trigger the popOut effect and start the comments polling
-            btn.addEventListener('click', (event)=> {popOut(event); commentsHandler.setPolling()});
+            btn.addEventListener('click', (event) => {
+                popOut(event);
+                commentsHandler.setPolling()
+            });
             // btn.addEventListener('click', ()=> { popOut(); commentsHandler.setPolling() });
 
             return utilities.elemFactory(
@@ -315,10 +318,18 @@
             let messageForm = createMessageForm(imgId);
             messageForm.addEventListener('submit', commentsHandler.submitComment);
 
+            let commentsCards = utilities.elemFactory(
+                'div',
+                ['commentsCards'],
+                [],
+                {
+                    'id': 'commentsCards'
+                });
+
             return utilities.elemFactory(
                 'div',
                 ['collapse'],
-                [messageForm],
+                [messageForm, commentsCards],
                 {
                     'id': 'commentsCollapse',
                     'data-img-id': `${imgId}`,
@@ -391,7 +402,10 @@
     const commentsHandler = (function () {
 
         let commentsCollapse;
+        let commentsCards;
         let intervalId;
+
+        let trashIconClasses = ['fa-solid', 'fa-trash'];
 
         /**
          * Submit the form comment to the server
@@ -431,12 +445,13 @@
         const setPolling = function () {
             // Set the object that needs to be updated
             commentsCollapse = document.getElementById('commentsCollapse');
+            commentsCards = document.getElementById('commentsCards');
 
             const imgId = commentsCollapse.dataset.imgId;
 
             // Update the comments for the first time (and set first update time)
             getImgComments(commentsCollapse.dataset.imgId)
-                .then(()=>{
+                .then(() => {
                     intervalId = setInterval(isNewComments, 3 * 1000, imgId);
                 });
         }
@@ -495,8 +510,9 @@
                 .then(data => {
                     if (data.success) {
                         const comments = data.comments;
-                        // Handle comments data
+
                         console.log('Comments:', comments);
+                        displayComments(comments);
                     } else {
                         console.log('Comments:', 'no comments found');
 
@@ -511,6 +527,43 @@
             commentsCollapse.dataset.lastUpdate = new Date().toJSON().slice(0, 19);
 
             // Display data
+        }
+
+        /**
+         * Displaying the comments in the comments collapse
+         * @param data - comments data
+         */
+        const displayComments = function (data) {
+            // Reset the old comments (Should be change to update...)
+            commentsCards.innerHTML = '';
+
+            data.forEach(comment => {
+                commentsCards.appendChild(createCommentDiv(comment));
+            })
+        }
+
+        const createCommentDiv = function (comment) {
+            let trashIcon = utilities.elemFactory('i', trashIconClasses);
+            let author = utilities.elemFactory(
+                'p',
+                ['d-flex']).appendChild(document.createTextNode(`author: ${comment.userName}`));
+
+            let commentDetails = utilities.elemFactory(
+                'div',
+                ['commentDetails', 'd-flex', 'flex-col', 'justify-content-between'],
+                [author, trashIcon]);
+
+            let text = document.createTextNode(`${comment.text}`);
+
+            let commentText = utilities.elemFactory(
+                'div',
+                ['commentText'],
+                [text]);
+
+            return utilities.elemFactory(
+                'div',
+                ['card', 'card-body'],
+                [commentDetails, commentText]);
         }
 
         return {

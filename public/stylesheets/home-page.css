@@ -207,3 +207,35 @@ body {
     overflow-y: auto;
 }
 
+.pop-out .image-container .collapse .commentsCards {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pop-out .image-container .collapse .commentsCards .card{
+    border: 1px solid #00726c;
+}
+
+.card .commentDetails {
+    position: relative;
+    padding: 0 5px 2px;
+    font-size: 12px;
+    border-bottom: 1px solid;
+    font-family: 'Lobster', sans-serif;
+}
+
+.card .commentDetails i{
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.card .commentText {
+    padding: 5px;
+}
+
+
+
