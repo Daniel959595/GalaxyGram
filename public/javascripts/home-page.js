@@ -543,15 +543,24 @@
         }
 
         const createCommentDiv = function (comment) {
-            let trashIcon = utilities.elemFactory('i', trashIconClasses);
+            let trashIcon = utilities.elemFactory('i', trashIconClasses, [],
+                {'data-img-id': `${comment.imgId}`, 'data-comment-id': `${comment.id}`});
+            trashIcon.addEventListener('click',deleteComment);
+
             let author = utilities.elemFactory(
                 'p',
                 ['d-flex']).appendChild(document.createTextNode(`author: ${comment.userName}`));
 
+            let content;
+            if (comment.isOwner)
+                content = [author, trashIcon];
+            else
+                content = [author];
+
             let commentDetails = utilities.elemFactory(
                 'div',
                 ['commentDetails', 'd-flex', 'flex-col', 'justify-content-between'],
-                [author, trashIcon]);
+                content);
 
             let text = document.createTextNode(`${comment.text}`);
 
@@ -564,6 +573,30 @@
                 'div',
                 ['card', 'card-body'],
                 [commentDetails, commentText]);
+        }
+
+        const deleteComment = async function (event) {
+            let imgId = event.currentTarget.dataset.imgId;
+            let commentId = event.currentTarget.dataset.commentId;
+
+            try {
+                const response = await fetch('/comments/deleteComment', {
+                    method: 'DELETE',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({imgId, commentId}),
+                });
+
+                if (response.ok) {
+                    // const data = await response.json();
+                    event.currentTarget.parentElement.removeChild(event.currentTarget);
+                    console.log('Comment deleted successfully');
+                } else {
+                    console.error('Failed to deleted  comment:', response.statusMessage);
+                }
+            } catch (e) {
+                console.error('Error deleting comment:', e);
+            }
+
         }
 
         return {

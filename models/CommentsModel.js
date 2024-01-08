@@ -1,3 +1,4 @@
+const {del} = require("express/lib/application");
 /**
  * Model that responsible on the comments handling
  * @type {{addComment: addComment}}
@@ -29,6 +30,16 @@ const CommentsModel = (function () {
     }
 
     /**
+     * Delete a comment from the memory
+     * @param imgId
+     * @param commentId
+     */
+    const deleteComment = function (imgId, commentId) {
+        commentsData[imgId].filter(comment => comment.id !== commentId);
+        lastUpdateTimes[imgId] = new Date().toJSON().slice(0, 19);;
+    }
+
+    /**
      * Checks if there is new comments since last update
      * @param imgId The id of the image we want to check
      * @param lastUpdate The last time we updated the client side
@@ -56,10 +67,21 @@ const CommentsModel = (function () {
         return commentsData[imgId];
     }
 
+    /**
+     * Get a specific comments
+     * @param imgId
+     * @param commentId
+     */
+    const getComment = function (imgId, commentId) {
+        return commentsData[imgId].find(comment => comment.id === commentId);
+    }
+
     return {
         addComment: addComment,
+        deleteComment: deleteComment,
         isNewComments: isNewComments,
-        getComments: getComments
+        getComments: getComments,
+        getComment: getComment
     }
 
 })()

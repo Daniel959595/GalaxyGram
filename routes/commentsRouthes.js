@@ -9,6 +9,11 @@ const commentsController = require('../controllers/CommentsController')
 router.post('/addComment', commentsController.addComment);
 
 /**
+ * Delete comment
+ */
+router.delete('/deleteComment', commentsController.deleteComment);
+
+/**
  * Checks if there's new comments
  */
 router.get('/isNewComments', commentsController.isNewComments);
