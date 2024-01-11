@@ -84,7 +84,7 @@ exports.getComments = (req, res) => {
     try {
         const imgId = req.query.imgId;
 
-        const commentsForImgId = commentsModel.getComments(imgId);
+        const commentsForImgId = commentsModel.getCommentsByImgId(imgId);
 
         if(commentsForImgId) {
             // Check if the user is the owner of the comment

@@ -576,8 +576,12 @@
         }
 
         const deleteComment = async function (event) {
+            event.stopPropagation();
+
             let imgId = event.currentTarget.dataset.imgId;
             let commentId = event.currentTarget.dataset.commentId;
+
+            let toRemove = event.target;
 
             try {
                 const response = await fetch('/comments/deleteComment', {
@@ -588,7 +592,7 @@
 
                 if (response.ok) {
                     // const data = await response.json();
-                    event.currentTarget.parentElement.removeChild(event.currentTarget);
+                    toRemove.parentElement.parentElement.remove();
                     console.log('Comment deleted successfully');
                 } else {
                     console.error('Failed to deleted  comment:', response.statusMessage);

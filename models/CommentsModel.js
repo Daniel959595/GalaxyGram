@@ -35,7 +35,7 @@ const CommentsModel = (function () {
      * @param commentId
      */
     const deleteComment = function (imgId, commentId) {
-        commentsData[imgId].filter(comment => comment.id !== commentId);
+        commentsData[imgId] = commentsData[imgId].filter(comment => comment.id !== commentId);
         lastUpdateTimes[imgId] = new Date().toJSON().slice(0, 19);;
     }
 
@@ -63,7 +63,7 @@ const CommentsModel = (function () {
      * @param imgId
      * @returns {*}
      */
-    const getComments = function (imgId) {
+    const getCommentsByImgId = function (imgId) {
         return commentsData[imgId];
     }
 
@@ -80,7 +80,7 @@ const CommentsModel = (function () {
         addComment: addComment,
         deleteComment: deleteComment,
         isNewComments: isNewComments,
-        getComments: getComments,
+        getCommentsByImgId: getCommentsByImgId,
         getComment: getComment
     }
 
