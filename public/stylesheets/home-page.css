@@ -214,8 +214,12 @@ body {
     gap: 4px;
 }
 
-.pop-out .image-container .collapse .commentsCards .card{
+.pop-out .image-container .collapse .commentsCards .card {
     border: 1px solid #00726c;
+}
+
+.pop-out .image-container .collapse .commentsCards .card i:hover {
+    scale: 1.2;
 }
 
 .card .commentDetails {

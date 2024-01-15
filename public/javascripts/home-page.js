@@ -155,22 +155,99 @@
         let messageIconClasses = ['fa-regular', 'fa-message'];
         let arrowIconClasses = ['fa-solid', 'fa-arrow-right'];
 
+        // Number of image needs to be load
+        let imgLimit;
+        // Number of image added every load
+        const imgIncreased = 8;
+        // Number of total pages
+        let pageCount;
+        // The current page to load
+        let currentPage;
+        // The current image index
+        let imgIndex;
+        // Boolean timer for the throttle function
+        let throttleTimer;
+
         /**
          * Displaying the images
          */
         const displayImages = function (data) {
 
-            imagesData = data;
+            imagesData = data.reverse();
 
             // reset the data
             picturesRow.innerHTML = '';
 
-            // loop through all the data elements
-            data.reverse().forEach((value, index) => {
-                picturesRow.appendChild(createImageCol(value, index));
-            });
+            // add event listener
 
+            defineScroll(imagesData.length);
+
+            loadFirstPage();
+            // loop through all the data elements
+            // data.reverse().forEach((value, index) => {
+            //     picturesRow.appendChild(createImageCol(value, index));
+            // });
         }
+
+        /**
+         * Sets the parameters of the scrolling
+         * @param limit
+         */
+        const defineScroll = function (numImgs) {
+            imgLimit = numImgs;
+            pageCount = Math.ceil(imgLimit / imgIncreased);
+            currentPage = 1;
+            imgIndex = 0;
+        }
+
+        /**
+         * Loads the first page of images
+         */
+        const loadFirstPage = function () {
+            addImages(currentPage);
+            window.addEventListener("scroll", handleInfiniteScroll);
+        }
+
+        /**
+         *
+         * @param pageIndex
+         */
+        const addImages = function (pageIndex) {
+            currentPage = pageIndex;
+            const startRange = (pageIndex - 1) * imgIncreased;
+            const endRange = currentPage === pageCount ? imgLimit : pageIndex * imgIncreased;
+            for (let i = startRange + 1; i <= endRange; i++) {
+                picturesRow.appendChild(createImageCol(imagesData[imgIndex], imgIndex++));
+            }
+        }
+
+        const throttle = (callback, time) => {
+            if (throttleTimer) return;
+            throttleTimer = true;
+            setTimeout(() => {
+                callback();
+                throttleTimer = false;
+            }, time);
+        };
+
+        const handleInfiniteScroll = () => {
+            throttle(() => {
+                const endOfPage =
+                    window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 5;
+                if (endOfPage) {
+                    addImages(currentPage + 1);
+                }
+                if (currentPage === pageCount) {
+                    removeInfiniteScroll();
+                }
+            }, 1000);
+        };
+
+        const removeInfiniteScroll = () => {
+            //loader.remove();
+            window.removeEventListener("scroll", handleInfiniteScroll);
+        };
+
 
         /**
          * Creates the col that contains the image container
