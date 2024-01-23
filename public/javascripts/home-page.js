@@ -447,7 +447,8 @@
                     'id': 'commentTextArea', 'name': 'commentText',
                     'placeholder': 'Type here...',
                     'style': 'width: -webkit-fill-available;max-width: 500px;' +
-                        ' padding: 10px;color: white;background: #080A12FF; border: 1px solid rgb(0, 114, 108);'
+                        ' padding: 10px;color: white;background: #080A12FF; border: 1px solid rgb(0, 114, 108);' +
+                        ' border-radius: 10px;height: 45px;'
                 })
         }
 
