@@ -17,6 +17,8 @@
     let invalidPassLogin
     let invalidNameRegister;
     let invalidPassRegister;
+    let loginError;
+    let registerError;
 
     /**
      * Initialize the global variables
@@ -34,12 +36,14 @@
         invalidNameLogin = document.getElementById('invalidNameLogin');
         btnRegister = document.getElementById('btn-register');
         nameInputRegister = document.getElementById('nameRegister');
+        loginError = document.getElementById('loginError');
+        registerError = document.getElementById('registerError');
 
 
     }
 
     /**
-     * Closure that responsible on the connection to the server api
+     * Closure that responsible on the connection to the API server
      */
     const serverApi = (function () {
 
@@ -51,27 +55,95 @@
         const submitLogin = async function (event) {
             event.preventDefault();
 
+            // Reset error section
+            loginError.textContent = '';
+            loginError.classList.add('d-none');
+
             const username = event.target.nameLogin.value.trim();
             const password = event.target.passLogin.value.trim();
 
-            const response = await fetch('/auth/login', {
+            await fetch('/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({username, password}),
-            });
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}, ${response.message}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // Login successful, redirect to the pictures page
+                        window.location.href = '/pictures/home-page';
+                        }
+                    else {
+                        // Login failed, display error message
+                        loginError.textContent = data.message;
+                        loginError.classList.toggle('d-none');
+                    }
+                })
+                .catch(error => {
+                    console.log(error.method);
+                })
 
-            if (response.ok) {
-                // Registration successful, redirect to the pictures page
-                window.location.href = '/pictures/home-page';
-            } else {
-                // Registration failed, display error message
-                // const data = await response.json();
-                // errorMessage.textContent = data.message;
-            }
+            // if (response.ok) {
+            //     // Registration successful, redirect to the pictures page
+            //     window.location.href = '/pictures/home-page';
+            // } else {
+            //     // Registration failed, display error message
+            //     const data = await response.json();
+            //     loginError.textContent = data.message;
+            //     loginError.classList.toggle('d-none');
+            // }
+        }
+
+        /**
+         * Submit the registration form
+         * @param event
+         * @returns {Promise<void>}
+         */
+        const submitRegister = async function (event) {
+            event.preventDefault();
+
+            // Reset error section
+            registerError.textContent = '';
+            registerError.classList.add('d-none');
+
+            const username = event.target.nameRegister.value.trim();
+            const password = event.target.passRegister.value.trim();
+
+            await fetch('/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({username, password}),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}, ${response.message}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // Registration successful, redirect to the pictures page
+                        window.location.href = '/pictures/home-page';
+                    }
+                    else {
+                        // Registration failed, display error message
+                        registerError.textContent = data.message;
+                        registerError.classList.toggle('d-none');
+                    }
+                })
+                .catch(error => {
+                    console.log(error.method);
+                })
         }
 
         return {
-            submitLogin: submitLogin
+            submitLogin: submitLogin,
+            submitRegister: submitRegister
         }
 
     }) ()
@@ -170,6 +242,7 @@
             nameInputRegister.addEventListener('input', validations.checkUserName);
             btnRegister.addEventListener('click', validations.chekNameAndPassword);
             loginForm.addEventListener('submit', serverApi.submitLogin);
+            registerForm.addEventListener('submit', serverApi.submitRegister);
 
         }, false);
 

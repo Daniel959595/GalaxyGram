@@ -95,7 +95,7 @@ exports.getComments = (req, res) => {
                     comment.isOwner = false;
             })
 
-            res.status(200).json({success: true, comments: commentsForImgId});
+            res.status(200).json({ success: true, comments: commentsForImgId});
         }
         else
             res.status(200).json({ success: false, message: 'No comments found for the specified imgId' });
