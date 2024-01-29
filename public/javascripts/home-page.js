@@ -2,7 +2,7 @@
 
     // Useful global variables
 
-    const NASAAPIKEY = 'ZGKJfGR0E2jUlWtd4yDqgMNfFVFFvaK6mfWOapiK';
+    const NASAAPIKEY = 'YourPersonalKey';
     const APOD_URL = 'https://api.nasa.gov/planetary/apod?';
 
     let CURRENT_DATE;

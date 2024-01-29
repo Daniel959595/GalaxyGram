@@ -26,7 +26,7 @@ This project is a RESTful web API built using Express.js and Node.js. The API en
    git clone <repository_url>
 2. Install project dependencies.
    npm install
-3. Obtain a NASA API key and update the configuration to include the key for fetching images.
+3. Obtain a NASA API key and update the variable 'NASAAPIKEY' at home-page.js file.
    see <a href="https://api.nasa.gov/">NASA API</a>
 4. Configure session settings and any other environment variables required (optinal).
 
