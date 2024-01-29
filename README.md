@@ -3,7 +3,7 @@
 ## Overview:
 This project is a RESTful web API built using Express.js and Node.js. The API allows users to interact with NASA's image collection. Users can register, log in, select a starting date, fetch images for each day from the NASA API, and leave comments on each picture. The client-side code incorporates asynchronous programming for improved responsiveness.
 
-<img src="images/image1.jpg">
+<img src="images/image3.jpg" alt="home-page-image">
 
 ## Technologies Used:
 - **Node.js**: JavaScript runtime for server-side development.
@@ -51,3 +51,9 @@ The client-side JavaScript code utilizes asynchronous programming techniques for
 
 ## Licence:
 Free for personal use, see also NASA Api licence <a href="https://api.nasa.gov/">Here.</a> 
+
+## Images:
+<img src="images/image1.jpg" alt="login-image">
+<img src="images/image2.jpg" alt="login-image-error">
+<img src="images/image3.jpg" alt="home-page-image">
+<img src="images/image4.jpg" alt="comments-image">
