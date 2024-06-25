@@ -2,7 +2,7 @@
 
 ## Overview:
 This project is a RESTful web API developed with Express.js and Node.js. 
-<br>It facilitates user interaction with NASA's image repository, offering functionalities such as user registration, login, and the ability to leave comments on each image. The client-side is designed to be responsive across different devices, leveraging asynchronous programming techniques to enhance responsiveness and ensure a smooth user experience.
+<br>It facilitates user interaction with NASA's image collection, offering functionalities such as user registration, login, and the ability to leave comments on each image. The client-side is designed to be responsive across different devices, leveraging asynchronous programming techniques to enhance responsiveness and ensure a smooth user experience.
 
 <img src="images/image3.jpg" alt="home-page-image">
 
